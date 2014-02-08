@@ -28,7 +28,7 @@ $ cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 # make install
 
 Note that there's no "make uninstall" and the GUI needs to be installed in the
-right location to work correctly.
+right location in order to work correctly.
 
 If you don't want the GUI frontend, append -DBUILD_GUI=NO to the cmake command.
 The GUI also isn't going to be built if you don't have the GTK+ 3 development
