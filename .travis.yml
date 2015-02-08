@@ -1,0 +1,20 @@
+language: c
+notifications:
+ irc:
+  channels: "anathema.us.nu#anathema"
+  use_notice: true
+  skip_join: true
+compiler:
+ - clang
+ - gcc
+before_install:
+ - sudo apt-get update -qq
+install:
+ - sudo apt-get install -y help2man libusb-1.0-0-dev libgtk-3-dev
+before_script:
+ - mkdir build
+ - cd build
+script:
+ - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+ - make
+ - cpack -G DEB
