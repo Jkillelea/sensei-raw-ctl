@@ -192,7 +192,7 @@ sensei_set_intensity (libusb_device_handle *device,
 {
 	unsigned char cmd_1[32] = { 0x05, 0x01, intensity };
 	unsigned char cmd_2[32] = { 0x05, 0x02, intensity };
-	unsigned result = sensei_send_command (device, cmd_1, sizeof cmd_1);
+	int result = sensei_send_command (device, cmd_1, sizeof cmd_1);
 	if (result < 0)
 		return result;
 	return sensei_send_command (device, cmd_2, sizeof cmd_2);
@@ -205,7 +205,7 @@ sensei_set_pulsation (libusb_device_handle *device,
 {
 	unsigned char cmd_1[32] = { 0x07, 0x01, pulsation };
 	unsigned char cmd_2[32] = { 0x07, 0x02, pulsation };
-	unsigned result = sensei_send_command (device, cmd_1, sizeof cmd_1);
+	int result = sensei_send_command (device, cmd_1, sizeof cmd_1);
 	if (result < 0)
 		return result;
 	return sensei_send_command (device, cmd_2, sizeof cmd_2);
