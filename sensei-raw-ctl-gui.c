@@ -29,6 +29,18 @@
 
 #include "config.h"
 
+#if ! GLIB_CHECK_VERSION (2, 34, 0)
+static void
+g_clear_pointer (void **pointer, void (*destroy) (void *))
+{
+	if (*pointer)
+	{
+		destroy (*pointer);
+		*pointer = NULL;
+	}
+}
+#endif  // ! GLIB_CHECK_VERSION (2, 34)
+
 /** User interface string for GtkBuilder. */
 extern const char ui[];
 
