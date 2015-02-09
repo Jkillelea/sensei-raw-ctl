@@ -30,15 +30,8 @@
 #include "config.h"
 
 #if ! GLIB_CHECK_VERSION (2, 34, 0)
-static void
-g_clear_pointer (void **pointer, void (*destroy) (void *))
-{
-	if (*pointer)
-	{
-		destroy (*pointer);
-		*pointer = NULL;
-	}
-}
+#define g_clear_pointer(p, destroy) \
+	G_STMT_START if (*(p)) { (destroy) (*(p)); *(p) = NULL; } G_STMT_END
 #endif  // ! GLIB_CHECK_VERSION (2, 34)
 
 /** User interface string for GtkBuilder. */
