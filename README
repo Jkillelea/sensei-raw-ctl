@@ -1,4 +1,5 @@
 sensei-raw-ctl
+==============
 
 This program makes it possible to change the configuration of your SteelSeries
 Sensei Raw mouse from within Linux, *BSD or any other POSIX-compatible system
@@ -11,22 +12,22 @@ available.  On Ubuntu and its derivates, you should be able to find it in your
 System Settings.
 
 Supported devices
-=================
+-----------------
  - SteelSeries Sensei Raw
  - SteelSeries Call of Duty: Black Ops II
  - SteelSeries Guild Wars 2
 
 Installation
-============
-Build dependencies: cmake >= 2.8.5, help2man, libusb >= 1.0,
-                    gtk+ >= 3.0 (optional)
+------------
+Build dependencies: cmake >= 2.8.5, help2man
+Runtime dependencies: libusb >= 1.0, gtk+ >= 3.0 (optional)
 
-$ git clone git://github.com/pjanouch/sensei-raw-ctl.git
-$ cd sensei-raw-ctl
-$ mkdir build
-$ cd build
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-# make install
+ $ git clone git://github.com/pjanouch/sensei-raw-ctl.git
+ $ cd sensei-raw-ctl
+ $ mkdir build
+ $ cd build
+ $ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug
+ # make install
 
 Note that there's no "make uninstall" and the GUI needs to be installed in the
 right location in order to work correctly.
@@ -36,7 +37,18 @@ The GUI also isn't going to be built if you don't have the GTK+ 3 development
 packages installed, if your distribution has any.
 
 For Debian-based distros, you can do the following instead of the last step:
-$ fakeroot cpack -G DEB
-# dpkg -i sensei-raw-ctl-*.deb
+ $ fakeroot cpack -G DEB
+ # dpkg -i sensei-raw-ctl-*.deb
 
-Leave out the fakeroot for CMake >= 2.8.9, it's been fixed since.
+Note that for versions of CMake before 2.8.9, you need to prefix cpack with
+`fakeroot' or file ownership will end up wrong.
+
+License
+-------
+`sensei-raw-ctl' is written by Přemysl Janouch <p.janouch@gmail.com>.
+
+You may use the software under the terms of the ISC license, the text of which
+is included within the package, or, at your option, you may relicense the work
+under the MIT or the Modified BSD License, as listed at the following site:
+
+http://www.gnu.org/licenses/license-list.html
