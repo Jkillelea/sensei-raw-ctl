@@ -146,6 +146,7 @@
           <item translatable='TRUE'>Slow</item>
           <item translatable='TRUE'>Medium</item>
           <item translatable='TRUE'>Fast</item>
+          <item translatable='TRUE'>Trigger</item>
          </items>
         </object><packing>
          <property name='expand'>TRUE</property>

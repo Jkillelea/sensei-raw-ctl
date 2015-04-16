@@ -38,7 +38,8 @@
 extern const char ui[];
 
 /* To translate combo box entries into sensei-raw-ctl arguments. */
-static gchar *pulsation_list[] = { "steady", "slow", "medium", "fast", NULL };
+static gchar *pulsation_list[] = { "steady", "slow", "medium", "fast",
+	"trigger", NULL };
 static gchar *intensity_list[] = { "off", "low", "medium", "high", NULL };
 
 /* GtkNotebook pages within the UI. */
