@@ -125,7 +125,8 @@ enum sensei_pulsation
 	PULSATION_STEADY = 1,
 	PULSATION_SLOW,
 	PULSATION_MEDIUM,
-	PULSATION_FAST
+	PULSATION_FAST,
+	PULSATION_TRIGGER
 };
 
 /** Device mode. */
@@ -281,6 +282,7 @@ sensei_display_config (const struct sensei_config *config)
 	case PULSATION_SLOW:    printf ("slow\n");    break;
 	case PULSATION_MEDIUM:  printf ("medium\n");  break;
 	case PULSATION_FAST:    printf ("fast\n");    break;
+	case PULSATION_TRIGGER: printf ("trigger\n"); break;
 	default:                printf ("unknown\n");
 	}
 
@@ -324,7 +326,7 @@ show_usage (const char *program_name)
 	printf ("  --cpi-on X      Set CPI with the LED on to X\n");
 	printf ("  --cpi-off X     Set CPI with the LED off to X\n");
 	printf ("  --pulsation X   Set the pulsation mode"
-	                         " (steady, slow, medium, fast)\n");
+	                         " (steady, slow, medium, fast, trigger)\n");
 	printf ("  --intensity X   Set the backlight intensity"
 	                         " (off, low, medium, high)\n");
 	printf ("  --save          Save the current configuration to ROM\n");
@@ -445,6 +447,8 @@ parse_options (int argc, char *argv[],
 			new_config->pulsation = PULSATION_MEDIUM;
 		else if (!strcasecmp (optarg, "fast"))
 			new_config->pulsation = PULSATION_FAST;
+		else if (!strcasecmp (optarg, "trigger"))
+			new_config->pulsation = PULSATION_TRIGGER;
 		else
 		{
 			fprintf (stderr, "Error: invalid backlight pulsation: %s\n", optarg);
