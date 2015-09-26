@@ -32,7 +32,7 @@ Runtime dependencies: libusb >= 1.0, gtk+ >= 3.0 (optional)
 Note that there's no `make uninstall` and the GUI needs to be installed in the
 right location in order to work correctly.
 
-If you don't want the GUI frontend, append `-DBUILD_GUI=NO` to the cmake
+If you don't want the GUI frontend, append `-DBUILD_GUI=NO` to the `cmake`
 command.  The GUI also isn't going to be built if you don't have the GTK+ 3
 development packages installed, if your distribution has any.
 
@@ -41,7 +41,7 @@ For Debian-based distros, you can do the following instead of the last step:
  $ cpack -G DEB
  # dpkg -i sensei-raw-ctl-*.deb
 
-Note that for versions of CMake before 2.8.9, you need to prefix cpack with
+Note that for versions of CMake before 2.8.9, you need to prefix `cpack` with
 `fakeroot` or file ownership will end up wrong.
 
 Contributing and Support
