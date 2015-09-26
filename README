@@ -43,6 +43,12 @@ For Debian-based distros, you can do the following instead of the last step:
 Note that for versions of CMake before 2.8.9, you need to prefix cpack with
 `fakeroot' or file ownership will end up wrong.
 
+Contributing and Support
+------------------------
+Use this project's GitHub to report any bugs, request features, or submit pull
+requests.  If you want to discuss this project, or maybe just hang out with
+the developer, feel free to join me at irc://anathema.irc.so, channel #anathema.
+
 License
 -------
 `sensei-raw-ctl' is written by Přemysl Janouch <p.janouch@gmail.com>.
