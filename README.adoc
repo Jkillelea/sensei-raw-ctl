@@ -1,11 +1,12 @@
 sensei-raw-ctl
 ==============
+:compact-option:
 
 This program makes it possible to change the configuration of your SteelSeries
 Sensei Raw mouse from within Linux, *BSD or any other POSIX-compatible system
 supported by libusb.
 
-Run `sensei-raw-ctl --help' or `man sensei-raw-ctl' for usage information.
+Run `sensei-raw-ctl --help` or `man sensei-raw-ctl` for usage information.
 
 If you don't fancy command line tools, there's also a basic GTK+ frontend
 available.  On Ubuntu and its derivates, you should be able to find it in your
@@ -19,29 +20,29 @@ Supported devices
 
 Installation
 ------------
-Build dependencies: cmake >= 2.8.5, help2man
+Build dependencies: cmake >= 2.8.5, help2man +
 Runtime dependencies: libusb >= 1.0, gtk+ >= 3.0 (optional)
 
  $ git clone git://github.com/pjanouch/sensei-raw-ctl.git
- $ cd sensei-raw-ctl
- $ mkdir build
- $ cd build
+ $ mkdir sensei-raw-ctl/build
+ $ cd sensei-raw-ctl/build
  $ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug
  # make install
 
-Note that there's no "make uninstall" and the GUI needs to be installed in the
+Note that there's no `make uninstall` and the GUI needs to be installed in the
 right location in order to work correctly.
 
-If you don't want the GUI frontend, append -DBUILD_GUI=NO to the cmake command.
-The GUI also isn't going to be built if you don't have the GTK+ 3 development
-packages installed, if your distribution has any.
+If you don't want the GUI frontend, append `-DBUILD_GUI=NO` to the cmake
+command.  The GUI also isn't going to be built if you don't have the GTK+ 3
+development packages installed, if your distribution has any.
 
 For Debian-based distros, you can do the following instead of the last step:
+
  $ cpack -G DEB
  # dpkg -i sensei-raw-ctl-*.deb
 
 Note that for versions of CMake before 2.8.9, you need to prefix cpack with
-`fakeroot' or file ownership will end up wrong.
+`fakeroot` or file ownership will end up wrong.
 
 Contributing and Support
 ------------------------
@@ -51,7 +52,7 @@ the developer, feel free to join me at irc://anathema.irc.so, channel #anathema.
 
 License
 -------
-`sensei-raw-ctl' is written by Přemysl Janouch <p.janouch@gmail.com>.
+'sensei-raw-ctl' is written by Přemysl Janouch <p.janouch@gmail.com>.
 
 You may use the software under the terms of the ISC license, the text of which
 is included within the package, or, at your option, you may relicense the work
