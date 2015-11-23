@@ -64,17 +64,22 @@ enum
 
 // ----- User interface -------------------------------------------------------
 
-static void
-fatal (GtkWidget *parent, const gchar *message)
+static gboolean
+user_wants_to_retry_critical_op (GtkWidget *parent, const gchar *message)
 {
 	GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
 		GTK_DIALOG_DESTROY_WITH_PARENT,
-		GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("Fatal error"));
+		GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, _("Error"));
+	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+		_("_Retry"), TRUE, _("_Close"), FALSE, NULL);
 	gtk_message_dialog_format_secondary_text
 		(GTK_MESSAGE_DIALOG (dialog), "%s", message);
-	gtk_dialog_run (GTK_DIALOG (dialog));
+
+	gboolean success = gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
-	gtk_main_quit ();
+	if (!success)
+		gtk_main_quit ();
+	return success;
 }
 
 static void
@@ -88,29 +93,37 @@ set_page (GtkBuilder *builder, gint page)
 static gboolean
 spawn_ctl (gchar **argv, gchar **out, GtkBuilder *builder)
 {
-	GError *error = NULL;
-	gint status;
-	gchar *err;
-
 	GtkWidget *win = GTK_WIDGET (gtk_builder_get_object (builder, "win"));
-	if (!g_spawn_sync (NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
-		out, &err, &status, &error))
+	gboolean trying = TRUE;
+	while (trying)
 	{
-		fatal (win, error->message);
-		g_error_free (error);
-		return FALSE;
+		GError *error = NULL;
+		gchar *err = NULL;
+		gint status;
+
+		if (!g_spawn_sync (NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
+			out, &err, &status, &error))
+		{
+			trying = user_wants_to_retry_critical_op (win, error->message);
+			g_error_free (error);
+			continue;
+		}
+
+		if (WIFEXITED (status) && WEXITSTATUS (status) == 0)
+		{
+			g_free (err);
+			return TRUE;
+		}
+
+		trying = FALSE;
+		if (strstr (err, "no suitable device"))
+			set_page (builder, PAGE_NO_DEVICE);
+		else
+			trying = user_wants_to_retry_critical_op (win, err);
+
+		g_clear_pointer (out, g_free);
+		g_free (err);
 	}
-
-	if (WIFEXITED (status) && WEXITSTATUS (status) == 0)
-		return TRUE;
-
-	if (strstr (err, "no suitable device"))
-		set_page (builder, PAGE_NO_DEVICE);
-	else
-		fatal (win, err);
-
-	g_clear_pointer (out, g_free);
-	g_free (err);
 	return FALSE;
 }
 
@@ -199,8 +212,14 @@ out:
 	g_free (out);
 
 	if (line != OUT_COUNT)
-		fatal (GTK_WIDGET (gtk_builder_get_object (builder, "win")),
-			_("Internal error"));
+	{
+		GtkWidget *dialog = gtk_message_dialog_new (
+			GTK_WINDOW (gtk_builder_get_object (builder, "win")),
+			GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR,
+			GTK_BUTTONS_CLOSE, _("Internal error: backend mismatch"));
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
+	}
 }
 
 static void
