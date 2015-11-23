@@ -90,19 +90,19 @@ set_page (GtkBuilder *builder, gint page)
 	gtk_notebook_set_current_page (notebook, page);
 }
 
-static gboolean
-spawn_ctl (gchar **argv, gchar **out, GtkBuilder *builder)
+static gchar *
+spawn_ctl (gchar **argv, GtkBuilder *builder)
 {
 	GtkWidget *win = GTK_WIDGET (gtk_builder_get_object (builder, "win"));
 	gboolean trying = TRUE;
 	while (trying)
 	{
 		GError *error = NULL;
-		gchar *err = NULL;
+		gchar *out = NULL, *err = NULL;
 		gint status;
 
 		if (!g_spawn_sync (NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
-			out, &err, &status, &error))
+			&out, &err, &status, &error))
 		{
 			trying = user_wants_to_retry_critical_op (win, error->message);
 			g_error_free (error);
@@ -112,7 +112,7 @@ spawn_ctl (gchar **argv, gchar **out, GtkBuilder *builder)
 		if (WIFEXITED (status) && WEXITSTATUS (status) == 0)
 		{
 			g_free (err);
-			return TRUE;
+			return out;
 		}
 
 		trying = FALSE;
@@ -121,10 +121,10 @@ spawn_ctl (gchar **argv, gchar **out, GtkBuilder *builder)
 		else
 			trying = user_wants_to_retry_critical_op (win, err);
 
-		g_clear_pointer (out, g_free);
+		g_free (out);
 		g_free (err);
 	}
-	return FALSE;
+	return NULL;
 }
 
 static gboolean
@@ -159,7 +159,7 @@ load_configuration (GtkBuilder *builder)
 		PROJECT_INSTALL_BINDIR "/" PROJECT_NAME, "--show", NULL };
 
 	gchar *out;
-	if (!spawn_ctl (argv, &out, builder))
+	if (!(out = spawn_ctl (argv, builder)))
 		return;
 
 	GRegex *regex = g_regex_new ("(?<=: ).*$", G_REGEX_MULTILINE, 0, NULL);
@@ -256,9 +256,7 @@ save_configuration (GtkBuilder *builder)
 		"--polling", polling, "--cpi-on", cpi_on, "--cpi-off", cpi_off,
 		"--pulsation", pulsation, "--intensity", intensity, NULL };
 
-	gchar *out;
-	if (spawn_ctl (argv, &out, builder))
-		g_free (out);
+	g_free (spawn_ctl (argv, builder));
 
 	g_free (polling);
 	g_free (cpi_on);
@@ -268,19 +266,17 @@ save_configuration (GtkBuilder *builder)
 static void
 on_set_mode_normal (GtkBuilder *builder)
 {
-	gchar *out, *argv[] = { "pkexec",
+	gchar *argv[] = { "pkexec",
 		PROJECT_INSTALL_BINDIR "/" PROJECT_NAME, "--mode", "normal", NULL };
-	if (spawn_ctl (argv, &out, builder))
-		g_free (out);
+	g_free (spawn_ctl (argv, builder));
 }
 
 static void
 on_set_mode_legacy (GtkBuilder *builder)
 {
-	gchar *out, *argv[] = { "pkexec",
+	gchar *argv[] = { "pkexec",
 		PROJECT_INSTALL_BINDIR "/" PROJECT_NAME, "--mode", "legacy", NULL };
-	if (spawn_ctl (argv, &out, builder))
-		g_free (out);
+	g_free (spawn_ctl (argv, builder));
 }
 
 // ----- User interface -------------------------------------------------------
