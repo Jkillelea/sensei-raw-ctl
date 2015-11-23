@@ -302,14 +302,14 @@ sensei_display_config (const struct sensei_config *config)
 
 struct options
 {
-	unsigned show_config   : 1;
-	unsigned save_to_rom   : 1;
-	unsigned set_pulsation : 1;
-	unsigned set_mode      : 1;
-	unsigned set_intensity : 1;
-	unsigned set_polling   : 1;
-	unsigned set_cpi_off   : 1;
-	unsigned set_cpi_on    : 1;
+	unsigned show_config        : 1;
+	unsigned do_not_save_to_rom : 1;
+	unsigned set_pulsation      : 1;
+	unsigned set_mode           : 1;
+	unsigned set_intensity      : 1;
+	unsigned set_polling        : 1;
+	unsigned set_cpi_off        : 1;
+	unsigned set_cpi_on         : 1;
 };
 
 static void
@@ -329,7 +329,7 @@ show_usage (const char *program_name)
 	                         " (steady, slow, medium, fast, trigger)\n");
 	printf ("  --intensity X   Set the backlight intensity"
 	                         " (off, low, medium, high)\n");
-	printf ("  --save          Save the current configuration to ROM\n");
+	printf ("  --no-save       Do not save changes in configuration to ROM\n");
 	printf ("\n");
 }
 
@@ -369,7 +369,7 @@ parse_options (int argc, char *argv[],
 		{ "help",      no_argument,       0, 'h' },
 		{ "version",   no_argument,       0, 'V' },
 		{ "show",      no_argument,       0, 's' },
-		{ "save",      no_argument,       0, 'S' },
+		{ "no-save",   no_argument,       0, 'S' },
 		{ "mode",      required_argument, 0, 'm' },
 		{ "polling",   required_argument, 0, 'p' },
 		{ "cpi-on",    required_argument, 0, 'c' },
@@ -400,7 +400,7 @@ parse_options (int argc, char *argv[],
 		options->show_config = true;
 		break;
 	case 'S':
-		options->save_to_rom = true;
+		options->do_not_save_to_rom = true;
 		break;
 	case 'm':
 		if (!strcasecmp (optarg, "legacy"))
@@ -518,7 +518,7 @@ apply_options (libusb_device_handle *device,
 		if ((result = sensei_set_cpi (device, new_config->cpi_on, true)))
 			return result;
 
-	if (options->save_to_rom)
+	if (options->do_not_save_to_rom == false)
 		if ((result = sensei_save_to_rom (device)))
 			return result;
 

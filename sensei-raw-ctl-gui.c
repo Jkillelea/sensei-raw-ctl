@@ -235,7 +235,7 @@ save_configuration (GtkBuilder *builder)
 
 	gchar *argv[] = { "pkexec", PROJECT_INSTALL_BINDIR "/" PROJECT_NAME,
 		"--polling", polling, "--cpi-on", cpi_on, "--cpi-off", cpi_off,
-		"--pulsation", pulsation, "--intensity", intensity, "--save", NULL };
+		"--pulsation", pulsation, "--intensity", intensity, NULL };
 
 	gchar *out;
 	if (spawn_ctl (argv, &out, builder))
