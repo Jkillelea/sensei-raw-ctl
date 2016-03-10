@@ -71,7 +71,7 @@ endforeach ()
 add_custom_target (docs ALL DEPENDS ${project_MAN_PAGES})
 
 foreach (page ${project_MAN_PAGES})
-	string (REGEX MATCH "\\.([0-9])" manpage_suffix "${page}")
+	string (REGEX MATCH "\\.([0-9])$" manpage_suffix "${page}")
 	install (FILES "${page}"
 		DESTINATION "${CMAKE_INSTALL_MANDIR}/man${CMAKE_MATCH_1}")
 endforeach ()
