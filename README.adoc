@@ -18,6 +18,15 @@ Supported devices
  - SteelSeries Call of Duty: Black Ops II
  - SteelSeries Guild Wars 2
 
+Packages
+--------
+Regular releases are sporadic.  git master should be stable enough.  You can get
+a package with the latest development version from Archlinux's AUR, or from
+openSUSE Build Service for the rest of mainstream distributions.  Consult the
+list of repositories and their respective links at:
+
+https://build.opensuse.org/project/repositories/home:pjanouch:git
+
 Installation
 ------------
 Build dependencies: cmake >= 2.8.5, help2man +
