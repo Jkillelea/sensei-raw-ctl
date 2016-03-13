@@ -57,7 +57,7 @@ Contributing and Support
 ------------------------
 Use this project's GitHub to report any bugs, request features, or submit pull
 requests.  If you want to discuss this project, or maybe just hang out with
-the developer, feel free to join me at irc://anathema.irc.so, channel #anathema.
+the developer, feel free to join me at irc://irc.janouch.name, channel #dev.
 
 License
 -------
