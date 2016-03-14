@@ -1,7 +1,7 @@
 language: c
 notifications:
  irc:
-  channels: "anathema.irc.so#anathema"
+  channels: "irc.janouch.name#dev"
   use_notice: true
   skip_join: true
 env:
