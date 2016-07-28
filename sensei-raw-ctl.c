@@ -6,7 +6,7 @@
  *
  * The code might be a bit long but does very little; most of it is UI.
  *
- * Copyright (c) 2013, Přemysl Janouch <p.janouch@gmail.com>
+ * Copyright (c) 2013 - 2016, Přemysl Janouch <p.janouch@gmail.com>
  * All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
@@ -28,6 +28,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <time.h>
 
 #include <getopt.h>
 #include <strings.h>
@@ -171,6 +172,10 @@ static int
 sensei_send_command (libusb_device_handle *device,
 	unsigned char *data, uint16_t length)
 {
+	// We can't just flood the mouse with requests, a 1ms pause is appropriate
+	struct timespec req = { .tv_sec = 0, .tv_nsec = 1000 * 1000 };
+	(void) nanosleep (&req, NULL);
+
 	int result = libusb_control_transfer (device, LIBUSB_ENDPOINT_OUT
 		| LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
 		USB_SET_REPORT, 0x0200, 0x0000, data, length, 0);
