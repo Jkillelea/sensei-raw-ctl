@@ -7,7 +7,6 @@
  * The code might be a bit long but does very little; most of it is UI.
  *
  * Copyright (c) 2013 - 2016, Přemysl Janouch <p.janouch@gmail.com>
- * All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
