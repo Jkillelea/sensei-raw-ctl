@@ -2,6 +2,10 @@ sensei-raw-ctl
 ==============
 :compact-option:
 
+This is a Fork
+--------------
+The original repo has moved and this is my version
+
 This program makes it possible to change the configuration of your SteelSeries
 Sensei Raw mouse from within Linux, *BSD or any other POSIX-compatible system
 supported by libusb.
