@@ -25,18 +25,14 @@ Supported devices
 Packages
 --------
 Regular releases are sporadic.  git master should be stable enough.  You can get
-a package with the latest development version from Archlinux's AUR, or from
-openSUSE Build Service for the rest of mainstream distributions.  Consult the
-list of repositories and their respective links at:
-
-https://build.opensuse.org/project/repositories/home:pjanouch:git
+a package with the latest development version from Archlinux's AUR.
 
 Installation
 ------------
 Build dependencies: cmake >= 2.8.5, help2man +
 Runtime dependencies: libusb >= 1.0, gtk+ >= 3.0 (optional)
 
- $ git clone git://github.com/pjanouch/sensei-raw-ctl.git
+ $ git clone https://git.janouch.name/p/sensei-raw-ctl.git
  $ mkdir sensei-raw-ctl/build
  $ cd sensei-raw-ctl/build
  $ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug
@@ -59,16 +55,13 @@ Note that for versions of CMake before 2.8.9, you need to prefix `cpack` with
 
 Contributing and Support
 ------------------------
-Use this project's GitHub to report any bugs, request features, or submit pull
-requests.  If you want to discuss this project, or maybe just hang out with
-the developer, feel free to join me at irc://irc.janouch.name, channel #dev.
+Use https://git.janouch.name/p/sensei-raw-ctl to report bugs, request features,
+or submit pull requests.  `git send-email` is tolerated.  If you want to discuss
+the project, feel free to join me at ircs://irc.janouch.name, channel #dev.
+
+Bitcoin donations are accepted at: 12r5uEWEgcHC46xd64tt3hHt9EUvYYDHe9
 
 License
 -------
-'sensei-raw-ctl' is written by Přemysl Janouch <p.janouch@gmail.com>.
-
-You may use the software under the terms of the ISC license, the text of which
-is included within the package, or, at your option, you may relicense the work
-under the MIT or the Modified BSD License, as listed at the following site:
-
-http://www.gnu.org/licenses/license-list.html
+This software is released under the terms of the 0BSD license, the text of which
+is included within the package along with the list of authors.
